@@ -68,9 +68,6 @@ TEMPLATES = [
     },
 ]
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -123,3 +120,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'hefny4@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
