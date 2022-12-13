@@ -1,6 +1,8 @@
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.postgres.search import TrigramSimilarity
+from .forms import EmailPostForm, CommentForm, SearchForm
 from django.shortcuts import render, get_object_or_404
-from .forms import EmailPostForm, CommentForm
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.db.models import Count
@@ -9,12 +11,37 @@ from taggit.models import Tag
 
 # Create your views here.
 
+
+def post_search(request):
+    form = SearchForm()
+    query = None
+    
+    # search_vector = SearchVector('title', 'body')
+    # search_vector = SearchVector('title', weight='A') + SearchVector('body', weight='B')
+    # search_query = SearchQuery(query)
+
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            # search_query = SearchQuery(query)
+
+            results = Post.published.annotate(
+                similarity=TrigramSimilarity('title', query),
+            ).filter(similarity__gt=0.1).order_by('-similarity')
+    
+    return render(request,'blog/post/search.html', {'form': form, 'query': query, 'results': results})
+
+
 class PostListView(ListView):
     queryset = Post.published.all()
     context_object_name = 'posts'
     paginate_by = 3
     template_name = 'blog/post/list.html'
 
+    Post.objects.annotate(search=SearchVector('title', 'body'),).filter(search='django')
 
 def post_share(request, post_id):
     # Retrieve post by id
@@ -45,6 +72,8 @@ def post_list(request,  tag_slug=None):
     tag = None
     paginator = Paginator(object_list, 3)
     page = request.GET.get('page')
+
+    Post.objects.annotate(search=SearchVector('title', 'body'),).filter(search='django')
 
     if tag_slug:
         tag = get_object_or_404(Tag, slug=tag_slug)
