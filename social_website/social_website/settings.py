@@ -10,6 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
+from dotenv import load_dotenv
+load_dotenv('.env')
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,10 +24,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'c$qk+rzw@^_m781)j15(qtpyyyo16j^8qf32#6p0p10f@f73sy'
+# SECRET_KEY = os.environ.get('SECRET_KEY', None)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
+DEBUG = True
+# DEBUG = os.environ.get('DEBUG', None)
+
+
+# ALLOWED_HOSTS = tuple(os.environ.get('ALLOWED_HOSTS', None)) 
 ALLOWED_HOSTS = []
 
 
@@ -81,6 +89,20 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+    # 'default': {
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'NAME': os.environ.get('DATABASE_NAME'),
+        # 'USER': os.environ.get('DATABASE_USER'),
+        # 'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        # 'HOST': os.environ.get('DATABASE_HOST'),
+        # 'PORT': os.environ.get('DATABASE_PORT'),
+        # 'TEST': {
+            # 'NAME': '',
+        # },
+    # }
+# }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -126,3 +148,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
