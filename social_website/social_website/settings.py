@@ -33,7 +33,7 @@ DEBUG = True
 
 
 # ALLOWED_HOSTS = tuple(os.environ.get('ALLOWED_HOSTS', None)) 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'account',
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +79,29 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'social_website.wsgi.application'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
+]
+
+#facebook
+SOCIAL_AUTH_FACEBOOK_KEY = '1204188586972661' # Facebook App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '3a2594e7b927cfbda53eb261b3bdee7c' # Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+#twitter
+"""
+SOCIAL_AUTH_TWITTER_KEY = 'XXX' # Twitter API Key
+SOCIAL_AUTH_TWITTER_SECRET = 'XXX' # Twitter API Secret
+"""
+
+#google
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '957950562146-bf1ojmrm5tc0o78lok5q7q0gosj64s0n.apps.googleusercontent.com' # Google Consumer Key
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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' # Google Consumer Secret
 
 
 # Database
