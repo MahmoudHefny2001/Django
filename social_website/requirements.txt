@@ -6,7 +6,9 @@ cryptography==38.0.4
 defusedxml==0.7.1
 Django==3.0.14
 django-extensions==2.2.5
+django-query-counter==0.2.1
 django-taggit==1.2.0
+easy-thumbnails==2.7
 idna==3.4
 Markdown==3.2.1
 oauthlib==3.2.2
@@ -24,5 +26,6 @@ six==1.16.0
 social-auth-app-django==3.1.0
 social-auth-core==4.3.0
 sqlparse==0.4.3
+tabulate==0.9.0
 urllib3==1.26.13
 Werkzeug==0.16.0

@@ -5,6 +5,8 @@ from django.shortcuts import render
 from .models import Profile
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib import messages
+# from query_counter.decorators import queries_counter
+# from django.utils.decorators import method_decorator
 
 # Create your views here.
 
