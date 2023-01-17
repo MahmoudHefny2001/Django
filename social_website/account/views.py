@@ -5,12 +5,12 @@ from django.shortcuts import render
 from .models import Profile
 from .forms import LoginForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib import messages
-# from query_counter.decorators import queries_counter
+from query_counter.decorators import queries_counter
 # from django.utils.decorators import method_decorator
 
 # Create your views here.
 
-
+@queries_counter
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -30,7 +30,7 @@ def register(request):
     return render(request, 'account/register.html', {'user_form': user_form})
 
 
-
+@queries_counter
 def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -57,11 +57,14 @@ def user_login(request):
     return render(request, 'account/login.html', {'form': form})
 
 
+@queries_counter
 @login_required
 def dashboard(request):
     return render(request, 'account/dashboard.html', {'section': 'dashboard'})
 
 
+
+@queries_counter
 @login_required
 def edit_profile(request):
     if request.method == 'POST':

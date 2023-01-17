@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     'account',
     'social_django',
     'django_extensions',
+
     'query_counter',
+
     'images',
     'easy_thumbnails',
 ]
@@ -56,6 +58,11 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+
+    #
+    'query_counter.middleware.DjangoQueryCounterMiddleware',
+    #
+    
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
